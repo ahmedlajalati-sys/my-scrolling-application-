@@ -3,28 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Scrolling.app - Login</title>
+    <title>Scrolling.app - Home</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="logo">✨ Scrolling.app ✨</div>
-            <div class="subtitle">Connect & Share with the world</div>
-            
-            <input type="text" id="loginUsername" class="input-field" placeholder="Username">
-            <input type="email" id="loginEmail" class="input-field" placeholder="Email">
-            <input type="password" id="loginPassword" class="input-field" placeholder="Password">
-            
-            <button id="loginBtn" class="btn-primary">🚀 Login</button>
-            
-            <div class="divider">OR</div>
-            
-            <button id="googleBtn" class="btn-primary btn-outline">🌐 Continue with Google</button>
-            
-            <div class="toggle-link" id="toggleAuth">
-                <span>➕ Create New Account</span>
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">Scrolling.app</div>
+            <div class="header-icons">
+                <button class="icon-btn" onclick="location.href='messages.html'">💬</button>
+                <button class="icon-btn" onclick="location.href='settings.html'">⚙️</button>
             </div>
+        </div>
+        <div class="stories-row" id="storiesList">
+            <div class="story-item" onclick="openStoryUpload()">
+                <div class="story-ring"><div class="story-avatar">+</div></div>
+                <span class="story-name">Your Story</span>
+            </div>
+        </div>
+        <div class="feed" id="feedList">
+            <div class="empty-state">✨ No posts yet. Tap + to create!</div>
+        </div>
+        <div class="bottom-nav">
+            <button class="nav-btn active" onclick="location.href='index.html'">🏠</button>
+            <button class="nav-btn" onclick="location.href='search.html'">🔍</button>
+            <button class="nav-btn" id="createPostBtn" onclick="openCreatePost()">➕</button>
+            <button class="nav-btn" onclick="location.href='reels.html'">🎬</button>
+            <button class="nav-btn" onclick="location.href='profile.html'">👤</button>
+        </div>
+    </div>
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h3>Create Post</h3><button class="close-modal" onclick="closeModal()">×</button></div>
+            <div class="post-type-selector">
+                <button class="post-type-btn active" data-type="image">📷 Photo</button>
+                <button class="post-type-btn" data-type="video">🎬 Reel</button>
+            </div>
+            <div id="uploadZone" class="upload-zone">📸 Tap to select</div>
+            <input type="file" id="fileInput" accept="image/*,video/*" style="display:none">
+            <textarea id="captionInput" rows="2" placeholder="Write a caption..."></textarea>
+            <button id="publishPostBtn" class="btn-primary">Share</button>
         </div>
     </div>
     <div id="toast" class="toast"></div>
