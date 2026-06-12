@@ -2,92 +2,339 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Scrolling.app - Home</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fafafa;
+            color: #262626;
+        }
+        .header {
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0095f6, #8e44ad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .stories-row {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding: 12px 16px;
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+        }
+        .story-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .story-ring {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0095f6, #8e44ad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .story-avatar {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        .story-name {
+            font-size: 11px;
+            color: #8e8e8e;
+        }
+        .feed {
+            padding: 12px;
+        }
+        .post {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #dbdbdb;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+        }
+        .post-user {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0095f6, #8e44ad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .post-media {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        .post-actions {
+            display: flex;
+            gap: 16px;
+            padding: 10px 12px;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        .post-caption {
+            padding: 0 12px 12px;
+            font-size: 13px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 16px 18px;
+            background: white;
+            border-top: 1px solid #dbdbdb;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #8e8e8e;
+        }
+        .nav-btn.active {
+            color: #0095f6;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8e8e8e;
+        }
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            opacity: 0;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
+    <div class="app-container" style="max-width:500px; margin:0 auto; background:#fafafa; min-height:100vh;">
         <div class="header">
-            <div class="header-title">Scrolling.app</div>
-            <div class="header-icons">
-                <button class="icon-btn" onclick="location.href='messages.html'">
-                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                </button>
-                <button class="icon-btn" onclick="location.href='settings.html'">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                </button>
+            <div class="logo">Scrolling.app</div>
+            <div>
+                <button class="icon-btn" onclick="openMessages()">💬</button>
+                <button class="icon-btn" onclick="openSettings()">⚙️</button>
             </div>
         </div>
 
-        <!-- Stories Row -->
-        <div class="stories-row" id="storiesContainer"></div>
+        <div class="stories-row" id="storiesContainer">
+            <div class="story-item" onclick="addStory()">
+                <div class="story-ring"><div class="story-avatar">+</div></div>
+                <span class="story-name">Your Story</span>
+            </div>
+        </div>
 
-        <!-- Feed -->
-        <div class="feed" id="feedContainer"></div>
+        <div class="feed" id="feedContainer">
+            <div class="empty-state">✨ No posts yet. Tap + to create your first post!</div>
+        </div>
 
-        <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <button class="nav-btn active" onclick="location.href='index.html'">
-                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                <span>Home</span>
-            </button>
-            <button class="nav-btn" onclick="location.href='reels.html'">
-                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
-                <span>Reels</span>
-            </button>
-            <button class="nav-btn" id="createPostBtn">
-                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                <span>Create</span>
-            </button>
-            <button class="nav-btn" onclick="location.href='profile.html'">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
-                <span>Profile</span>
-            </button>
+            <button class="nav-btn active" onclick="goHome()">🏠</button>
+            <button class="nav-btn" onclick="goSearch()">🔍</button>
+            <button class="nav-btn" id="createPostBtn" onclick="openCreatePost()">➕</button>
+            <button class="nav-btn" onclick="goReels()">🎬</button>
+            <button class="nav-btn" onclick="goProfile()">👤</button>
         </div>
     </div>
 
     <!-- Create Post Modal -->
-    <div id="postModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Create new post</h3>
-                <button class="close-modal" onclick="closeModal()">×</button>
-            </div>
-            <div class="post-type-selector">
-                <button class="post-type-btn active" data-type="image">📷 Photo</button>
-                <button class="post-type-btn" data-type="video">🎬 Reel</button>
-            </div>
-            <div id="uploadZone" class="upload-zone">
-                📸 Tap to select image or video
-            </div>
-            <input type="file" id="fileInput" accept="image/*,video/*" style="display:none">
-            <div class="music-selector" id="musicSelector" style="display:none">
-                <input type="text" id="musicSearch" placeholder="Search for music...">
-                <div id="musicResults"></div>
-            </div>
-            <textarea id="captionInput" rows="3" placeholder="Write a caption..."></textarea>
-            <button id="publishPostBtn" class="btn-primary">Share</button>
+    <div id="postModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
+        <div style="background:white; border-radius:20px; padding:24px; width:90%; max-width:400px;">
+            <h3>Create Post</h3>
+            <div id="uploadZone" style="border:2px dashed #0095f6; border-radius:16px; padding:30px; text-align:center; margin:12px 0; cursor:pointer;">📸 Tap to select</div>
+            <input type="file" id="fileInput" accept="image/*" style="display:none">
+            <textarea id="captionInput" rows="2" placeholder="Write a caption..." style="width:100%; padding:10px; margin:12px 0; border:1px solid #ddd; border-radius:12px;"></textarea>
+            <button id="publishBtn" style="width:100%; padding:12px; background:#0095f6; color:white; border:none; border-radius:12px; font-weight:bold;">Share</button>
+            <button onclick="closeModal()" style="width:100%; padding:12px; margin-top:8px; background:#ddd; border:none; border-radius:12px;">Cancel</button>
         </div>
-    </div>
-
-    <!-- Story Viewer Modal -->
-    <div id="storyViewer" class="story-viewer">
-        <div class="story-viewer-header">
-            <button class="close-story" onclick="closeStoryViewer()">✕</button>
-        </div>
-        <div class="story-viewer-content" id="storyViewerContent"></div>
     </div>
 
     <div id="toast" class="toast"></div>
 
-    <script src="config.js"></script>
-    <script src="auth.js"></script>
-    <script src="stories.js"></script>
-    <script src="posts.js"></script>
-    <script src="music.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Current user
+        const currentUser = localStorage.getItem('currentUser') || 'Guest';
+        
+        // Posts storage
+        let posts = JSON.parse(localStorage.getItem('posts') || '[]');
+        
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+        
+        function loadFeed() {
+            const container = document.getElementById('feedContainer');
+            if (posts.length === 0) {
+                container.innerHTML = '<div class="empty-state">✨ No posts yet. Tap + to create your first post!</div>';
+                return;
+            }
+            container.innerHTML = posts.map(post => `
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-user">
+                            <div class="post-avatar">👤</div>
+                            <div><strong>${post.username}</strong></div>
+                        </div>
+                        <span>⋯</span>
+                    </div>
+                    <div class="post-media">
+                        <img src="${post.media}" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="likePost('${post.id}')">❤️ ${post.likes || 0}</button>
+                        <button class="action-btn">💬 ${post.comments?.length || 0}</button>
+                        <button class="action-btn">🔖</button>
+                        <button class="action-btn">📤</button>
+                    </div>
+                    <div class="post-caption"><strong>${post.username}</strong> ${post.caption || ''}</div>
+                </div>
+            `).reverse().join('');
+        }
+        
+        function likePost(id) {
+            const post = posts.find(p => p.id == id);
+            if (post) {
+                post.likes = (post.likes || 0) + 1;
+                localStorage.setItem('posts', JSON.stringify(posts));
+                loadFeed();
+                showToast('❤️ Liked!');
+            }
+        }
+        
+        // Create post
+        let pendingMedia = null;
+        
+        function openCreatePost() {
+            document.getElementById('postModal').style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('postModal').style.display = 'none';
+            pendingMedia = null;
+        }
+        
+        document.getElementById('uploadZone')?.addEventListener('click', () => {
+            document.getElementById('fileInput').click();
+        });
+        
+        document.getElementById('fileInput')?.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                pendingMedia = ev.target.result;
+                document.getElementById('uploadZone').innerHTML = '✅ Image selected';
+            };
+            reader.readAsDataURL(file);
+        });
+        
+        document.getElementById('publishBtn')?.addEventListener('click', () => {
+            if (!pendingMedia) {
+                showToast('Please select an image');
+                return;
+            }
+            const newPost = {
+                id: Date.now(),
+                username: currentUser,
+                media: pendingMedia,
+                caption: document.getElementById('captionInput').value,
+                likes: 0,
+                comments: []
+            };
+            posts.push(newPost);
+            localStorage.setItem('posts', JSON.stringify(posts));
+            closeModal();
+            document.getElementById('captionInput').value = '';
+            document.getElementById('uploadZone').innerHTML = '📸 Tap to select';
+            loadFeed();
+            showToast('✅ Post shared!');
+        });
+        
+        // Navigation
+        function goHome() { location.reload(); }
+        function goSearch() { showToast('Search coming soon'); }
+        function goReels() { showToast('Reels coming soon'); }
+        function goProfile() { 
+            showToast(`Profile: @${currentUser}`);
+        }
+        function openMessages() { showToast('Messages coming soon'); }
+        function openSettings() { showToast('Settings coming soon'); }
+        function addStory() { showToast('Add story coming soon'); }
+        
+        loadFeed();
+    </script>
 </body>
 </html>
