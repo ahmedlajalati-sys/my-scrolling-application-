@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Scrolling.app - Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <button class="icon-btn" onclick="location.href='index.html'">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="header-title">Profile</div>
+            <button class="icon-btn" onclick="location.href='settings.html'">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+        </div>
+
+        <!-- Profile Header -->
+        <div class="profile-header" id="profileHeader"></div>
+
+        <!-- Stats Row -->
+        <div class="profile-stats-row" id="profileStats"></div>
+
+        <!-- Bio -->
+        <div class="profile-bio" id="profileBio"></div>
+
+        <!-- Tabs -->
+        <div class="profile-tabs">
+            <button class="profile-tab active" data-tab="posts">📷 Posts</button>
+            <button class="profile-tab" data-tab="reels">🎬 Reels</button>
+            <button class="profile-tab" data-tab="saved">💾 Saved</button>
+        </div>
+
+        <!-- Posts Grid -->
+        <div class="profile-grid" id="profileGrid"></div>
+
+        <!-- Followers/Following Modal -->
+        <div id="followModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="followModalTitle">Followers</h3>
+                    <button class="close-modal" onclick="closeFollowModal()">×</button>
+                </div>
+                <div id="followList" class="follow-list"></div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Modal -->
+        <div id="editProfileModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Profile</h3>
+                    <button class="close-modal" onclick="closeEditProfile()">×</button>
+                </div>
+                <div class="avatar-upload" onclick="document.getElementById('avatarInput').click()">
+                    <img id="avatarPreview" src="">
+                    <div class="avatar-overlay">📷 Change</div>
+                </div>
+                <input type="file" id="avatarInput" accept="image/*" style="display:none">
+                <input type="text" id="editFullName" class="edit-field" placeholder="Full Name">
+                <input type="text" id="editBio" class="edit-field" placeholder="Bio">
+                <button id="saveProfileBtn" class="btn-primary">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-btn" onclick="location.href='index.html'">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>Home</span>
+            </button>
+            <button class="nav-btn" onclick="location.href='reels.html'">
+                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                <span>Reels</span>
+            </button>
+            <button class="nav-btn" id="createPostBtn">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>Create</span>
+            </button>
+            <button class="nav-btn active" onclick="location.href='profile.html'">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
+                <span>Profile</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script src="posts.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
